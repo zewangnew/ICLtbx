@@ -39,8 +39,16 @@ crbenconn -rfc -c 30 -atlas BN_atlas_274.nii.gz -i rsfmri_inMNIspace.nii.gz -o f
 #pte connectome matrix
 PTE_conn -c 30 -atlas BN_atlas_274.nii.gz -i rsfmri_inMNIspace.nii.gz -o pte_conn.dat
 
-#within subject MI based connectivity matrix calculation. One HCP subject would take about 20 mins 
-MI_conn -c 30 -atlas BN_atlas_274.nii.gz -i rsfmri_inMNIspace.nii.gz -o MI_conn.dat
+#within subject MI based connectivity matrix calculation. 
+# The current version contains three different MI algorithms: the traditional histogram based one, KDE, KSG.  the option -opt is to choose the one to be used.
+# For using MI_hist with 20 bins:
+    MI_conn -c 30 -nbins 20 -i rsfmri.nii.gz -atlas BN_atlas_274.nii.gz -m brainmask.nii.gz -o MI_hist_conn.data \n");  //opt is 2 by default
+#  MI_KDE:
+    MI_conn -c 30 -opt 0 -i rsfmri.nii.gz -atlas BN_atlas_274.nii.gz -m brainmask.nii.gz -o MI_KDE_conn.data;
+#  MI_KSG with a kernel of 4:
+  MI_conn -c 30 -opt 1 -d 4 -i rsfmri.nii.gz -atlas BN_atlas_274.nii.gz -m brainmask.nii.gz -o MI_KSG_conn.data;  
+# MI_hist and MI_KDE are faster than MI_KSG.  nbins should be determined using 2*pow(N,1/3) where N is the time series length.
+# For MI_KSG, -d 4 or -d 5 should be used.
 
 # Between subject or between session connection calculation.
 # cross subject or cross session entropy using cross-sample entropy 
@@ -57,4 +65,5 @@ csmiroi  -c 40 -itype 4 -atlas BN_atlas_274.nii.gz -i1 rsfmri1.nii.gz -i2 rsfmri
 
 ## connectome matrices are saved in a binary file with the following data format: 1 integer (4 byte) specifying the number of ROIs used in the atlas. Let's name this integer variable as NR. 
 ## The next section contains NR * NR * NMAPS float numbers (each with 4 bytes).  NMAPS is 1 for FC, CRBEN, MI; 3 for PTE, 3 or 8 for ctcm
+
 ## 
