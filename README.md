@@ -1,5 +1,5 @@
 # ICLtbx
-This package includes various tools for computing voxelwise, cross-regional entropy, temporal coherence, correlation coefficient, mutual information. Many of these metrics have been extended to handle between-session and between-subject data. BEN, TCM, and CTCM have been included in the other repositories. Detailed instructions for running the code can be found in readme.txt.
+This package includes various tools for computing voxelwise, cross-regional entropy, temporal coherence, correlation coefficient, mutual information. Many of these metrics have been extended to handle between-session and between-subject data. BEN, TCM, and CTCM have been included in the other repositories. Detailed instructions for running the code can be found in readme.txt. Depending on your OS and gcc, you may need to choose an older version compiled with gcc 7x or 8x.
 
 References for BEN:
 1. Z Wang, Y Li, AR Childress, JA Detre, Brain entropy mapping using fMRI, Plos one 2014, 9 (3), e89948
